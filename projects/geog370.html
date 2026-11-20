@@ -196,6 +196,133 @@
   .detail-info { position: static; }
   .detail-page { padding-top: 35px; }
 }
+
+/* Extended final project analysis */
+
+.analysis-section {
+  padding-top: 85px;
+  margin-top: 85px;
+  border-top: 1px solid var(--line);
+}
+
+.analysis-header {
+  margin-bottom: 55px;
+  max-width: 760px;
+}
+
+.analysis-header h2 {
+  font-family: var(--serif);
+  font-size: clamp(46px, 6vw, 78px);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 16px 0 22px;
+}
+
+.analysis-header > p:last-child {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.analysis-workflow {
+  margin-bottom: 90px;
+}
+
+.analysis-subheading {
+  border-top: 1px solid var(--line);
+  padding-top: 35px;
+  margin-bottom: 40px;
+}
+
+.analysis-subheading h3,
+.analysis-interpretation h3 {
+  font-family: var(--serif);
+  font-size: clamp(34px, 4vw, 50px);
+  font-weight: 600;
+  margin: 12px 0;
+}
+
+.analysis-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 65px 35px;
+}
+
+.analysis-figure {
+  margin: 0;
+  min-width: 0;
+}
+
+.analysis-image-button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: #efeee9;
+  cursor: zoom-in;
+}
+
+.analysis-image-button img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.analysis-figure-large .analysis-image-button {
+  padding: 25px;
+}
+
+.analysis-figure-large img {
+  max-height: 720px;
+  object-fit: contain;
+}
+
+.analysis-figure figcaption {
+  margin-top: 20px;
+}
+
+.analysis-number {
+  display: block;
+  color: #999;
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+
+.analysis-figure h4 {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0 0 12px;
+}
+
+.analysis-figure figcaption p,
+.analysis-interpretation > p:not(.eyebrow) {
+  font-size: 14px;
+  line-height: 1.9;
+  color: #666;
+  max-width: 680px;
+}
+
+.analysis-interpretation {
+  border-top: 1px solid var(--line);
+  margin-top: 90px;
+  padding-top: 35px;
+}
+
+@media (max-width: 700px) {
+  .analysis-grid {
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
+
+  .analysis-section {
+    margin-top: 55px;
+    padding-top: 55px;
+  }
+}
+
 </style>
 </head>
 
@@ -252,6 +379,49 @@
 
   </div>
 
+  
+<section class="analysis-section" id="analysisSection" hidden>
+
+  <div class="analysis-header">
+    <p class="eyebrow">GEOG 370 / FINAL PROJECT</p>
+    <h2>Analysis &amp; Results.</h2>
+    <p>
+      Explore the research workflow and the spatial
+      indicators used to construct the final risk index.
+      Click any figure to view it in full resolution.
+    </p>
+  </div>
+
+  <div class="analysis-workflow" id="analysisWorkflow"></div>
+
+  <div class="analysis-indicators">
+    <div class="analysis-subheading">
+      <p class="eyebrow">02 / SPATIAL INDICATORS</p>
+      <h3>Supporting Maps</h3>
+    </div>
+    <div class="analysis-grid" id="analysisGrid"></div>
+  </div>
+
+  <div class="analysis-interpretation">
+    <p class="eyebrow">03 / FINAL RISK ASSESSMENT</p>
+    <h3>Interpreting the Risk Index</h3>
+
+    <p>
+      The final index combines food access hazards
+      and socioeconomic vulnerability to identify
+      counties with potentially greater barriers to
+      food access among older adults.
+    </p>
+
+    <p>
+      The index represents relative risk based on
+      selected county-level indicators. It should
+      not be interpreted as a direct measurement
+      of individual food insecurity.
+    </p>
+  </div>
+
+</section>
   <div class="project-navigation" id="navigation"></div>
 </main>
 
@@ -419,6 +589,49 @@ const projects = [
     maps: [
     ["Food Access Risk Index", "geog370-final-risk.jpg"]
       ],
+    
+maps: [
+  ["Food Access Risk Index", "geog370-final-risk.jpg"]
+],
+
+analysis: [
+  {
+    title: "Research Workflow",
+    image: "geog370-final-flowchart.png",
+    description: "Workflow for constructing the food access risk assessment, including indicator selection and the integration of hazard and vulnerability components."
+  },
+  {
+    title: "Low Food Access Among Older Adults",
+    image: "geog370-final-senior-access.jpg",
+    description: "Percentage of older adults living more than one mile from a food store."
+  },
+  {
+    title: "Grocery Store Availability",
+    image: "geog370-final-grocery.jpg",
+    description: "Number of grocery stores and supermarkets per 1,000 residents."
+  },
+  {
+    title: "Metropolitan Status",
+    image: "geog370-final-metro.jpg",
+    description: "Metropolitan and nonmetropolitan county classification."
+  },
+  {
+    title: "Poverty Rate",
+    image: "geog370-final-poverty.jpg",
+    description: "County-level poverty rates used to represent socioeconomic vulnerability."
+  },
+  {
+    title: "Vehicle and Food Access",
+    image: "geog370-final-vehicle-access.jpg",
+    description: "Percentage of households without a vehicle that also have limited food store access."
+  },
+  {
+    title: "Older Population",
+    image: "geog370-final-older-population.jpg",
+    description: "Percentage of county residents aged 65 and older."
+  }
+],
+
     description: [
       "This research project investigates which areas in the United States have the highest food access risk for older adults.",
       "I constructed a spatial risk assessment framework combining hazard and vulnerability indicators. Hazard measures included food store accessibility, grocery store availability, and metropolitan status. Vulnerability measures incorporated socioeconomic and demographic characteristics such as poverty, vehicle access, and the concentration of older residents.",
@@ -508,6 +721,78 @@ if (!project) {
   }
 
   showMap(0);
+  
+// Extended analysis gallery for selected projects
+
+if (project.analysis && project.analysis.length > 0) {
+
+  const section = document.getElementById("analysisSection");
+  const workflow = document.getElementById("analysisWorkflow");
+  const grid = document.getElementById("analysisGrid");
+
+  section.hidden = false;
+
+  function createFigure(item, index, large = false) {
+    const figure = document.createElement("figure");
+    figure.className = large
+      ? "analysis-figure analysis-figure-large"
+      : "analysis-figure";
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "analysis-image-button";
+    button.setAttribute(
+      "aria-label",
+      "Enlarge " + item.title
+    );
+
+    const img = document.createElement("img");
+    img.src = imgPath(item.image);
+    img.alt = item.title;
+    img.loading = "lazy";
+
+    button.appendChild(img);
+
+    button.addEventListener("click", () => {
+      zoomImage.src = imgPath(item.image);
+      zoomImage.alt = item.title;
+      document.getElementById("zoomDialog").showModal();
+    });
+
+    const caption = document.createElement("figcaption");
+
+    const label = document.createElement("span");
+    label.className = "analysis-number";
+    label.textContent = String(index).padStart(2, "0");
+
+    const title = document.createElement("h4");
+    title.textContent = item.title;
+
+    const description = document.createElement("p");
+    description.textContent = item.description;
+
+    caption.append(label, title, description);
+    figure.append(button, caption);
+
+    return figure;
+  }
+
+  // First figure: full-width workflow
+  workflow.appendChild(
+    createFigure(project.analysis[0], 1, true)
+  );
+
+  // Remaining figures: two-column gallery
+  project.analysis.slice(1).forEach((item, i) => {
+    grid.appendChild(createFigure(item, i + 2));
+  });
+
+  // Ensure the main map always opens its own image
+  document.getElementById("mapButton").onclick = () => {
+    zoomImage.src = mainMap.src;
+    zoomImage.alt = mainMap.alt;
+  };
+}
 
   const navigation = document.getElementById("navigation");
   const prev = projects[index - 1];
