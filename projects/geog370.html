@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../style.css">
 
 <style>
+/* Project details */
 .detail-page {
   padding-top: 55px;
   padding-bottom: 100px;
@@ -32,7 +33,7 @@
   width: 100%;
   padding: 0;
   border: 0;
-  background: none;
+  background: transparent;
   cursor: zoom-in;
 }
 
@@ -42,11 +43,14 @@
   height: auto;
 }
 
-.map-caption {
-  margin: 12px 0 24px;
+.map-caption, .map-name {
   color: #777;
   font-size: 12px;
+  line-height: 1.6;
 }
+
+.map-caption { margin: 12px 0 20px; }
+.map-name { margin-top: 12px; }
 
 .map-selector {
   display: flex;
@@ -55,10 +59,10 @@
 }
 
 .map-choice {
-  padding: 0;
   width: 100px;
+  padding: 4px;
+  background: transparent;
   border: 1px solid #deddd9;
-  background: none;
   cursor: pointer;
   opacity: .65;
 }
@@ -71,14 +75,8 @@
 .map-choice img {
   display: block;
   width: 100%;
-  height: 70px;
+  height: 78px;
   object-fit: contain;
-}
-
-.map-name {
-  color: #777;
-  font-size: 12px;
-  margin-top: 12px;
 }
 
 .detail-info {
@@ -117,7 +115,7 @@
 
 .metadata {
   display: grid;
-  grid-template-columns: 95px 1fr;
+  grid-template-columns: 95px minmax(0, 1fr);
   gap: 12px;
   font-size: 13px;
   line-height: 1.7;
@@ -125,7 +123,10 @@
 }
 
 .metadata dt { color: #888; }
-.metadata dd { margin: 0; }
+.metadata dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
 
 .project-navigation {
   display: flex;
@@ -139,6 +140,7 @@
 .project-navigation a {
   font-family: var(--serif);
   font-size: 23px;
+  max-width: 45%;
 }
 
 .project-navigation span {
@@ -150,54 +152,10 @@
   margin-bottom: 9px;
 }
 
-.zoom-dialog {
-  position: fixed;
-  inset: 0;
-  width: 96vw;
-  height: 94vh;
-  max-width: none;
-  max-height: none;
-  border: 0;
-  padding: 65px 20px 25px;
-  background: #171717;
-  overflow: auto;
-  text-align: center;
+/* Final project analysis */
+.analysis-section[hidden] {
+  display: none !important;
 }
-
-.zoom-dialog::backdrop {
-  background: rgba(0,0,0,.85);
-}
-
-.zoom-dialog img {
-  display: block;
-  max-width: none;
-  width: auto;
-  height: auto;
-  margin: 0 auto;
-}
-
-.zoom-close {
-  position: fixed;
-  right: 35px;
-  top: 25px;
-  background: #171717;
-  border: 0;
-  color: white;
-  font-size: 30px;
-  cursor: pointer;
-  z-index: 10;
-}
-
-@media (max-width: 800px) {
-  .project-layout {
-    grid-template-columns: 1fr;
-    gap: 35px;
-  }
-  .detail-info { position: static; }
-  .detail-page { padding-top: 35px; }
-}
-
-/* Extended final project analysis */
 
 .analysis-section {
   padding-top: 85px;
@@ -239,7 +197,7 @@
   font-family: var(--serif);
   font-size: clamp(34px, 4vw, 50px);
   font-weight: 600;
-  margin: 12px 0;
+  margin: 12px 0 25px;
 }
 
 .analysis-grid {
@@ -257,7 +215,7 @@
   display: block;
   width: 100%;
   padding: 0;
-  border: 0;
+  border: none;
   background: #efeee9;
   cursor: zoom-in;
 }
@@ -275,7 +233,6 @@
 
 .analysis-figure-large img {
   max-height: 720px;
-  object-fit: contain;
 }
 
 .analysis-figure figcaption {
@@ -311,25 +268,135 @@
   padding-top: 35px;
 }
 
+/* Interactive image viewer */
+.zoom-dialog {
+  position: fixed;
+  inset: 0;
+  width: 96vw;
+  height: 94vh;
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: #171717;
+  overflow: hidden;
+  color: white;
+}
+
+.zoom-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.zoom-dialog::backdrop {
+  background: rgba(0, 0, 0, .86);
+}
+
+.zoom-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 18px;
+  flex-shrink: 0;
+}
+
+.zoom-toolbar button {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid #555;
+  border-radius: 3px;
+  background: #303030;
+  color: white;
+  font-family: var(--sans);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.zoom-toolbar button:hover {
+  background: #505050;
+}
+
+#zoomClose {
+  margin-left: 12px;
+  font-size: 25px;
+}
+
+.zoom-viewport {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  touch-action: none;
+  cursor: grab;
+}
+
+.zoom-viewport.dragging {
+  cursor: grabbing;
+}
+
+#zoomImage {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transform-origin: center center;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+.zoom-hint {
+  padding: 12px;
+  color: #aaa;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 800px) {
+  .project-layout {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+
+  .detail-info {
+    position: static;
+  }
+
+  .detail-page {
+    padding-top: 35px;
+  }
+
+  .analysis-section {
+    padding-top: 55px;
+    margin-top: 55px;
+  }
+}
+
 @media (max-width: 700px) {
   .analysis-grid {
     grid-template-columns: 1fr;
     gap: 45px;
   }
 
-  .analysis-section {
-    margin-top: 55px;
-    padding-top: 55px;
+  .project-navigation a {
+    font-size: 18px;
   }
 }
-
 </style>
 </head>
 
 <body>
-
 <header class="site-header">
-  <nav class="nav container">
+  <nav class="nav container" aria-label="Main navigation">
     <a class="logo" href="../index.html">LANYUE ZHANG</a>
     <div class="nav-links">
       <a href="../index.html">Home</a>
@@ -342,20 +409,17 @@
 </header>
 
 <main class="container detail-page">
-  <a class="back-link" href="../work.html">
-    ← ALL WORK / 2026
-  </a>
+  <a class="back-link" href="../work.html">← ALL WORK / 2026</a>
 
   <div class="project-layout">
-
     <div>
       <button class="map-button" id="mapButton"
-              aria-label="Enlarge map">
+              type="button" aria-label="Enlarge map">
         <img id="mainMap" alt="Project map">
       </button>
 
       <p class="map-caption">
-        Click the map to view the full-resolution image.
+        Click the map to enlarge. Zoom and drag to inspect details.
       </p>
 
       <div class="map-selector" id="mapSelector"></div>
@@ -376,52 +440,45 @@
         <dl class="metadata" id="projectMetadata"></dl>
       </div>
     </div>
-
   </div>
 
-  
-<section class="analysis-section" id="analysisSection" hidden>
-
-  <div class="analysis-header">
-    <p class="eyebrow">GEOG 370 / FINAL PROJECT</p>
-    <h2>Analysis &amp; Results.</h2>
-    <p>
-      Explore the research workflow and the spatial
-      indicators used to construct the final risk index.
-      Click any figure to view it in full resolution.
-    </p>
-  </div>
-
-  <div class="analysis-workflow" id="analysisWorkflow"></div>
-
-  <div class="analysis-indicators">
-    <div class="analysis-subheading">
-      <p class="eyebrow">02 / SPATIAL INDICATORS</p>
-      <h3>Supporting Maps</h3>
+  <section class="analysis-section" id="analysisSection" hidden>
+    <div class="analysis-header">
+      <p class="eyebrow">GEOG 370 / FINAL PROJECT</p>
+      <h2>Analysis &amp; Results.</h2>
+      <p>
+        Explore the research workflow and the spatial indicators
+        used to construct the final risk index. Click any figure
+        to view it in full resolution.
+      </p>
     </div>
-    <div class="analysis-grid" id="analysisGrid"></div>
-  </div>
 
-  <div class="analysis-interpretation">
-    <p class="eyebrow">03 / FINAL RISK ASSESSMENT</p>
-    <h3>Interpreting the Risk Index</h3>
+    <div class="analysis-workflow" id="analysisWorkflow"></div>
 
-    <p>
-      The final index combines food access hazards
-      and socioeconomic vulnerability to identify
-      counties with potentially greater barriers to
-      food access among older adults.
-    </p>
+    <div class="analysis-indicators">
+      <div class="analysis-subheading">
+        <p class="eyebrow">02 / SPATIAL INDICATORS</p>
+        <h3>Supporting Maps</h3>
+      </div>
+      <div class="analysis-grid" id="analysisGrid"></div>
+    </div>
 
-    <p>
-      The index represents relative risk based on
-      selected county-level indicators. It should
-      not be interpreted as a direct measurement
-      of individual food insecurity.
-    </p>
-  </div>
+    <div class="analysis-interpretation">
+      <p class="eyebrow">03 / FINAL RISK ASSESSMENT</p>
+      <h3>Interpreting the Risk Index</h3>
+      <p>
+        The final index combines food access hazards and
+        socioeconomic vulnerability to identify counties with
+        potentially greater barriers to food access among older adults.
+      </p>
+      <p>
+        The index represents relative risk based on selected
+        county-level indicators. It should not be interpreted
+        as a direct measurement of individual food insecurity.
+      </p>
+    </div>
+  </section>
 
-</section>
   <div class="project-navigation" id="navigation"></div>
 </main>
 
@@ -432,31 +489,29 @@
   </div>
 </footer>
 
-
 <dialog class="zoom-dialog" id="zoomDialog"
         aria-label="Interactive map viewer">
-
   <div class="zoom-toolbar">
-    <button id="zoomOut" aria-label="Zoom out">−</button>
-    <button id="zoomIn" aria-label="Zoom in">+</button>
-    <button id="zoomReset" aria-label="Reset zoom">Reset</button>
-    <button id="zoomClose" aria-label="Close image">×</button>
+    <button id="zoomOut" type="button" aria-label="Zoom out">−</button>
+    <button id="zoomIn" type="button" aria-label="Zoom in">+</button>
+    <button id="zoomReset" type="button" aria-label="Reset zoom">Reset</button>
+    <button id="zoomClose" type="button" aria-label="Close image">×</button>
   </div>
 
   <div class="zoom-viewport" id="zoomViewport">
-    <img id="zoomImage"
-         alt="Enlarged project map"
-         draggable="false">
+    <img id="zoomImage" alt="Enlarged map" draggable="false">
   </div>
 
   <div class="zoom-hint">
-    Scroll to zoom · Drag to move · Double-click to zoom
+    Scroll to zoom · Drag to move · Double-click to zoom · Esc to close
   </div>
-
 </dialog>
 
-
 <script>
+/* ============================================
+   GEOG 370 PROJECT DATA
+============================================ */
+
 const projects = [
   {
     id: "digital-divide",
@@ -472,11 +527,10 @@ const projects = [
       ["Households Without Internet", "geog370-p1-no-internet.png"]
     ],
     description: [
-    "This project examines geographic inequalities in internet access across Ireland using two maps of digital connectivity.",
-    "The first map visualizes areas with low bandwidth access in 2016, while the second highlights areas with limited internet connectivity. Together, they illustrate spatial differences in digital infrastructure and access across the country.",
-    "By comparing these patterns, the project demonstrates how GIS can be used to identify geographic disparities in digital accessibility."
+      "This project examines geographic inequalities in internet access across Ireland using two maps of digital connectivity.",
+      "The first map visualizes areas with low bandwidth access in 2016, while the second highlights areas with limited internet connectivity. Together, they illustrate spatial differences in digital infrastructure and access across the country.",
+      "By comparing these patterns, the project demonstrates how GIS can be used to identify geographic disparities in digital accessibility."
     ]
-
   },
 
   {
@@ -495,6 +549,62 @@ const projects = [
       "This project maps median household income across North Carolina counties using data from the 2024 American Community Survey.",
       "I joined census attributes to county boundaries and classified income values to create a choropleth map. The final layout combines geographic context, a graduated color scheme, a legend, and supporting cartographic elements.",
       "The map provides a visual comparison of county-level income differences and demonstrates the use of census data in socioeconomic mapping."
+    ]
+  },
+
+  {
+    id: "food-access",
+    number: "03",
+    title: "Food Access Risk for Older Adults",
+    category: "FOOD ACCESS / RISK MODELING",
+    location: "United States",
+    tools: "GIS / Spatial Analysis",
+    methods: "Multi-Criteria Risk Modeling, Index Construction",
+    data: "USDA Food Environment Atlas",
+    maps: [
+      ["Food Access Risk Index", "geog370-final-risk.jpg"]
+    ],
+    analysis: [
+      {
+        title: "Research Workflow",
+        image: "geog370-final-flowchart.png",
+        description: "Workflow for constructing the food access risk assessment, including indicator selection and integration of hazard and vulnerability components."
+      },
+      {
+        title: "Low Food Access Among Older Adults",
+        image: "geog370-final-senior-access.jpg",
+        description: "Percentage of older adults living more than one mile from a food store."
+      },
+      {
+        title: "Grocery Store Availability",
+        image: "geog370-final-grocery.jpg",
+        description: "Number of grocery stores and supermarkets per 1,000 residents."
+      },
+      {
+        title: "Metropolitan Status",
+        image: "geog370-final-metro.jpg",
+        description: "Metropolitan and nonmetropolitan county classification."
+      },
+      {
+        title: "Poverty Rate",
+        image: "geog370-final-poverty.jpg",
+        description: "County-level poverty rates used to represent socioeconomic vulnerability."
+      },
+      {
+        title: "Vehicle and Food Access",
+        image: "geog370-final-vehicle-access.jpg",
+        description: "Percentage of households without a vehicle that also have limited food store access."
+      },
+      {
+        title: "Older Population",
+        image: "geog370-final-older-population.jpg",
+        description: "Percentage of county residents aged 65 and older."
+      }
+    ],
+    description: [
+      "This research project investigates which areas in the United States have the highest food access risk for older adults.",
+      "I constructed a spatial risk assessment framework combining hazard and vulnerability indicators. Hazard measures included food store accessibility, grocery store availability, and metropolitan status. Vulnerability measures incorporated socioeconomic and demographic characteristics such as poverty, vehicle access, and the concentration of older residents.",
+      "By integrating multiple indicators into composite indices, the project explores spatial differences in potential food access barriers and identifies areas that may warrant closer investigation."
     ]
   },
 
@@ -533,7 +643,7 @@ const projects = [
     description: [
       "This project examines how historical maps can be aligned with contemporary geographic reference data.",
       "I practiced georeferencing using historical map imagery and a USGS historical topographic map. The workflow involved locating corresponding features, selecting control points, and adjusting the historical maps to match modern spatial coordinates.",
-      "Working with Carrboro and Brooklyn demonstrated how the availability of recognizable street patterns can influence the georeferencing process."
+      "Working with Carrboro and Brooklyn demonstrated how recognizable street patterns influence the georeferencing process."
     ]
   },
 
@@ -550,10 +660,11 @@ const projects = [
       ["Larceny Density Map 2024", "geog370-l5-larceny.jpg"],
       ["Chapel Hill Crime Map 2024", "geog370-l5-crime.jpg"]
     ],
-    description: ["This project examines the spatial distribution of reported crime in Chapel Hill, North Carolina, using crime data from 2024.",
-                  "I created two maps to compare different crime patterns. The first focuses specifically on larceny incidents, using a density heatmap to identify areas where theft-related crimes are concentrated. The second visualizes the broader distribution of reported crime, allowing comparisons between larceny hotspots and overall crime patterns.",
-                  "By combining point locations with density visualization, the maps reveal spatial concentrations of reported incidents and demonstrate how GIS can support exploratory crime pattern analysis."
-                 ]
+    description: [
+      "This project examines the spatial distribution of reported crime in Chapel Hill, North Carolina, using crime data from 2024.",
+      "I created two maps to compare different crime patterns. The first focuses specifically on larceny incidents, using a density heatmap to identify areas where theft-related crimes are concentrated. The second visualizes the broader distribution of reported crime, allowing comparisons between larceny hotspots and overall crime patterns.",
+      "By combining point locations with density visualization, the maps reveal spatial concentrations of reported incidents and demonstrate how GIS can support exploratory crime pattern analysis."
+    ]
   },
 
   {
@@ -571,7 +682,7 @@ const projects = [
     description: [
       "This project examines the topographic characteristics of Central Colorado using digital elevation data.",
       "I generated terrain representations including elevation, slope, hillshade, and contour lines. I adjusted contour intervals and visualization settings to accommodate the region's steep and complex relief.",
-      "The final maps demonstrate how different terrain derivatives reveal complementary aspects of mountainous landscapes."
+      "The maps demonstrate how terrain derivatives reveal complementary aspects of mountainous landscapes."
     ]
   },
 
@@ -592,97 +703,41 @@ const projects = [
       "I applied a repeatable geoprocessing workflow to generate elevation, slope, hillshade, and contour maps. Compared with Central Colorado, the gentler topography required different visualization choices to communicate subtle elevation differences.",
       "The project illustrates how terrain analysis methods can be adapted to geographic regions with contrasting relief."
     ]
-  },
-
-  {
-    id: "food-access",
-    number: "14",
-    title: "Food Access Risk for Older Adults",
-    category: "FOOD ACCESS / RISK MODELING",
-    location: "United States",
-    tools: "GIS / Spatial Analysis",
-    methods: "Multi-Criteria Risk Modeling, Index Construction",
-    data: "USDA Food Environment Atlas",
-    maps: [
-    ["Food Access Risk Index", "geog370-final-risk.jpg"]
-      ],
-    
-maps: [
-  ["Food Access Risk Index", "geog370-final-risk.jpg"]
-],
-
-analysis: [
-  {
-    title: "Research Workflow",
-    image: "geog370-final-flowchart.png",
-    description: "Workflow for constructing the food access risk assessment, including indicator selection and the integration of hazard and vulnerability components."
-  },
-  {
-    title: "Low Food Access Among Older Adults",
-    image: "geog370-final-senior-access.jpg",
-    description: "Percentage of older adults living more than one mile from a food store."
-  },
-  {
-    title: "Grocery Store Availability",
-    image: "geog370-final-grocery.jpg",
-    description: "Number of grocery stores and supermarkets per 1,000 residents."
-  },
-  {
-    title: "Metropolitan Status",
-    image: "geog370-final-metro.jpg",
-    description: "Metropolitan and nonmetropolitan county classification."
-  },
-  {
-    title: "Poverty Rate",
-    image: "geog370-final-poverty.jpg",
-    description: "County-level poverty rates used to represent socioeconomic vulnerability."
-  },
-  {
-    title: "Vehicle and Food Access",
-    image: "geog370-final-vehicle-access.jpg",
-    description: "Percentage of households without a vehicle that also have limited food store access."
-  },
-  {
-    title: "Older Population",
-    image: "geog370-final-older-population.jpg",
-    description: "Percentage of county residents aged 65 and older."
-  }
-],
-
-    description: [
-      "This research project investigates which areas in the United States have the highest food access risk for older adults.",
-      "I constructed a spatial risk assessment framework combining hazard and vulnerability indicators. Hazard measures included food store accessibility, grocery store availability, and metropolitan status. Vulnerability measures incorporated socioeconomic and demographic characteristics such as poverty, vehicle access, and the concentration of older residents.",
-      "By integrating multiple indicators into composite indices, the project explores spatial differences in potential food access barriers and identifies areas that may warrant closer investigation."
-    ]
   }
 ];
 
+/* ============================================
+   LOAD PROJECT
+============================================ */
+
 const params = new URLSearchParams(window.location.search);
-const id = params.get("id");
-const index = projects.findIndex(p => p.id === id);
+const projectId = params.get("id");
+const index = projects.findIndex(p => p.id === projectId);
 const project = projects[index];
+
+const byId = id => document.getElementById(id);
+const imgPath = file => "../images/" + file;
+
+const mainMap = byId("mainMap");
+const zoomImage = byId("zoomImage");
+const dialog = byId("zoomDialog");
+const selector = byId("mapSelector");
 
 if (!project) {
   document.querySelector("main").innerHTML =
-    '<h1>Project not found</h1><p><a href="../work.html">Return to Work</a></p>';
+    '<h1>Project not found</h1><a href="../work.html">Return to Work</a>';
 } else {
   document.title = project.title + " — Lanyue Zhang";
 
-  const imgPath = file => "../images/" + file;
-  const mainMap = document.getElementById("mainMap");
-  const zoomImage = document.getElementById("zoomImage");
-
-  document.getElementById("projectCategory").textContent =
+  byId("projectCategory").textContent =
     "PROJECT " + project.number + " / " + project.category;
 
-  document.getElementById("projectTitle").textContent =
-    project.title;
+  byId("projectTitle").textContent = project.title;
 
-  const desc = document.getElementById("projectDescription");
   project.description.forEach(paragraph => {
     const p = document.createElement("p");
     p.textContent = paragraph;
-    desc.appendChild(p);
+    byId("projectDescription").appendChild(p);
   });
 
   const metadata = {
@@ -694,24 +749,20 @@ if (!project) {
     Location: project.location
   };
 
-  const dl = document.getElementById("projectMetadata");
   Object.entries(metadata).forEach(([key, value]) => {
     const dt = document.createElement("dt");
     const dd = document.createElement("dd");
     dt.textContent = key;
     dd.textContent = value;
-    dl.append(dt, dd);
+    byId("projectMetadata").append(dt, dd);
   });
-
-  const selector = document.getElementById("mapSelector");
 
   function showMap(i) {
     const [label, filename] = project.maps[i];
+
     mainMap.src = imgPath(filename);
     mainMap.alt = label;
-    zoomImage.src = imgPath(filename);
-    zoomImage.alt = label;
-    document.getElementById("mapName").textContent = label;
+    byId("mapName").textContent = label;
 
     selector.querySelectorAll(".map-choice").forEach((button, j) => {
       button.classList.toggle("active", i === j);
@@ -722,128 +773,303 @@ if (!project) {
   if (project.maps.length > 1) {
     project.maps.forEach(([label, filename], i) => {
       const button = document.createElement("button");
-      button.className = "map-choice";
       button.type = "button";
+      button.className = "map-choice";
       button.title = label;
       button.setAttribute("aria-label", "Show " + label);
 
       const img = document.createElement("img");
       img.src = imgPath(filename);
       img.alt = label;
-      button.appendChild(img);
 
+      button.appendChild(img);
       button.addEventListener("click", () => showMap(i));
       selector.appendChild(button);
     });
   }
 
   showMap(0);
-  
-// Extended analysis gallery for selected projects
 
-if (project.analysis && project.analysis.length > 0) {
-
-  const section = document.getElementById("analysisSection");
-  const workflow = document.getElementById("analysisWorkflow");
-  const grid = document.getElementById("analysisGrid");
-
-  section.hidden = false;
-
-  function createFigure(item, index, large = false) {
-    const figure = document.createElement("figure");
-    figure.className = large
-      ? "analysis-figure analysis-figure-large"
-      : "analysis-figure";
-
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "analysis-image-button";
-    button.setAttribute(
-      "aria-label",
-      "Enlarge " + item.title
-    );
-
-    const img = document.createElement("img");
-    img.src = imgPath(item.image);
-    img.alt = item.title;
-    img.loading = "lazy";
-
-    button.appendChild(img);
-
-    button.addEventListener("click", () => {
-      zoomImage.src = imgPath(item.image);
-      zoomImage.alt = item.title;
-      document.getElementById("zoomDialog").showModal();
-    });
-
-    const caption = document.createElement("figcaption");
-
-    const label = document.createElement("span");
-    label.className = "analysis-number";
-    label.textContent = String(index).padStart(2, "0");
-
-    const title = document.createElement("h4");
-    title.textContent = item.title;
-
-    const description = document.createElement("p");
-    description.textContent = item.description;
-
-    caption.append(label, title, description);
-    figure.append(button, caption);
-
-    return figure;
-  }
-
-  // First figure: full-width workflow
-  workflow.appendChild(
-    createFigure(project.analysis[0], 1, true)
-  );
-
-  // Remaining figures: two-column gallery
-  project.analysis.slice(1).forEach((item, i) => {
-    grid.appendChild(createFigure(item, i + 2));
+  byId("mapButton").addEventListener("click", () => {
+    openViewer(mainMap.src, mainMap.alt);
   });
 
-  // Ensure the main map always opens its own image
-  document.getElementById("mapButton").onclick = () => {
-    zoomImage.src = mainMap.src;
-    zoomImage.alt = mainMap.alt;
-  };
-}
+  /* Analysis & Results for Final Project */
+  if (project.analysis && project.analysis.length > 0) {
+    byId("analysisSection").hidden = false;
 
-  const navigation = document.getElementById("navigation");
+    function createFigure(item, number, large = false) {
+      const figure = document.createElement("figure");
+      figure.className = large
+        ? "analysis-figure analysis-figure-large"
+        : "analysis-figure";
+
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "analysis-image-button";
+      button.setAttribute("aria-label", "Enlarge " + item.title);
+
+      const img = document.createElement("img");
+      img.src = imgPath(item.image);
+      img.alt = item.title;
+      img.loading = "lazy";
+
+      button.appendChild(img);
+      button.addEventListener("click", () => {
+        openViewer(img.src, item.title);
+      });
+
+      const caption = document.createElement("figcaption");
+
+      const label = document.createElement("span");
+      label.className = "analysis-number";
+      label.textContent = String(number).padStart(2, "0");
+
+      const title = document.createElement("h4");
+      title.textContent = item.title;
+
+      const description = document.createElement("p");
+      description.textContent = item.description;
+
+      caption.append(label, title, description);
+      figure.append(button, caption);
+
+      return figure;
+    }
+
+    byId("analysisWorkflow").appendChild(
+      createFigure(project.analysis[0], 1, true)
+    );
+
+    project.analysis.slice(1).forEach((item, i) => {
+      byId("analysisGrid").appendChild(
+        createFigure(item, i + 2)
+      );
+    });
+  }
+
+  /* Previous / Next */
   const prev = projects[index - 1];
   const next = projects[index + 1];
+  const nav = byId("navigation");
 
-  function makeNav(item, label) {
+  function addNav(item, label) {
     const a = document.createElement("a");
     a.href = "geog370.html?id=" + encodeURIComponent(item.id);
 
-    const heading = document.createElement("span");
-    heading.textContent = label;
+    const small = document.createElement("span");
+    small.textContent = label;
 
-    a.append(heading, document.createTextNode(item.title));
+    a.append(small, document.createTextNode(item.title));
     return a;
   }
 
-  if (prev) navigation.appendChild(makeNav(prev, "← PREVIOUS PROJECT"));
-  else navigation.appendChild(document.createElement("span"));
+  nav.appendChild(
+    prev ? addNav(prev, "← PREVIOUS PROJECT")
+         : document.createElement("span")
+  );
 
-  if (next) navigation.appendChild(makeNav(next, "NEXT PROJECT →"));
-
-  const dialog = document.getElementById("zoomDialog");
-
-  document.getElementById("mapButton")
-    .addEventListener("click", () => dialog.showModal());
-
-  document.getElementById("zoomClose")
-    .addEventListener("click", () => dialog.close());
-
-  dialog.addEventListener("click", event => {
-    if (event.target === dialog) dialog.close();
-  });
+  if (next) {
+    nav.appendChild(addNav(next, "NEXT PROJECT →"));
+  }
 }
-</script>
 
+/* ============================================
+   INTERACTIVE MAP VIEWER
+============================================ */
+
+const viewport = byId("zoomViewport");
+const pointers = new Map();
+
+let scale = 1;
+let offsetX = 0;
+let offsetY = 0;
+let lastPinchDistance = null;
+let lastPinchCenter = null;
+
+const MIN_ZOOM = 1;
+const MAX_ZOOM = 8;
+
+function applyTransform() {
+  zoomImage.style.transform =
+    `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+}
+
+function limitOffsets() {
+  const viewportWidth = viewport.clientWidth;
+  const viewportHeight = viewport.clientHeight;
+
+  const baseWidth = zoomImage.clientWidth;
+  const baseHeight = zoomImage.clientHeight;
+
+  const maxX = Math.max(0, (baseWidth * scale - viewportWidth) / 2);
+  const maxY = Math.max(0, (baseHeight * scale - viewportHeight) / 2);
+
+  offsetX = Math.max(-maxX, Math.min(maxX, offsetX));
+  offsetY = Math.max(-maxY, Math.min(maxY, offsetY));
+}
+
+function resetZoom() {
+  scale = 1;
+  offsetX = 0;
+  offsetY = 0;
+  pointers.clear();
+  lastPinchDistance = null;
+  lastPinchCenter = null;
+  viewport.classList.remove("dragging");
+  applyTransform();
+}
+
+function zoomAt(newScale, clientX, clientY) {
+  const oldScale = scale;
+  scale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, newScale));
+
+  if (scale === 1) {
+    offsetX = 0;
+    offsetY = 0;
+  } else {
+    const rect = viewport.getBoundingClientRect();
+    const px = clientX - rect.left - rect.width / 2;
+    const py = clientY - rect.top - rect.height / 2;
+    const ratio = scale / oldScale;
+
+    offsetX = px - (px - offsetX) * ratio;
+    offsetY = py - (py - offsetY) * ratio;
+  }
+
+  limitOffsets();
+  applyTransform();
+}
+
+function zoomCenter(factor) {
+  const rect = viewport.getBoundingClientRect();
+  zoomAt(
+    scale * factor,
+    rect.left + rect.width / 2,
+    rect.top + rect.height / 2
+  );
+}
+
+function openViewer(src, alt) {
+  resetZoom();
+  zoomImage.src = src;
+  zoomImage.alt = alt;
+  dialog.showModal();
+
+  zoomImage.onload = () => {
+    resetZoom();
+  };
+}
+
+byId("zoomIn").addEventListener("click", () => zoomCenter(1.35));
+byId("zoomOut").addEventListener("click", () => zoomCenter(1 / 1.35));
+byId("zoomReset").addEventListener("click", resetZoom);
+byId("zoomClose").addEventListener("click", () => dialog.close());
+
+dialog.addEventListener("close", resetZoom);
+
+dialog.addEventListener("click", event => {
+  if (event.target === dialog) dialog.close();
+});
+
+/* Scroll to zoom */
+viewport.addEventListener("wheel", event => {
+  event.preventDefault();
+  const factor = Math.exp(-event.deltaY * 0.002);
+  zoomAt(scale * factor, event.clientX, event.clientY);
+}, { passive: false });
+
+/* Double click */
+viewport.addEventListener("dblclick", event => {
+  event.preventDefault();
+  zoomAt(scale * 1.6, event.clientX, event.clientY);
+});
+
+/* Drag and pinch */
+function pinchData() {
+  const points = Array.from(pointers.values());
+  if (points.length < 2) return null;
+
+  return {
+    distance: Math.hypot(
+      points[0].x - points[1].x,
+      points[0].y - points[1].y
+    ),
+    x: (points[0].x + points[1].x) / 2,
+    y: (points[0].y + points[1].y) / 2
+  };
+}
+
+viewport.addEventListener("pointerdown", event => {
+  if (event.pointerType === "mouse" && event.button !== 0) return;
+
+  viewport.setPointerCapture(event.pointerId);
+  pointers.set(event.pointerId, {
+    x: event.clientX,
+    y: event.clientY
+  });
+
+  viewport.classList.add("dragging");
+
+  if (pointers.size >= 2) {
+    const pinch = pinchData();
+    lastPinchDistance = pinch.distance;
+    lastPinchCenter = { x: pinch.x, y: pinch.y };
+  }
+});
+
+viewport.addEventListener("pointermove", event => {
+  if (!pointers.has(event.pointerId)) return;
+
+  const old = pointers.get(event.pointerId);
+  pointers.set(event.pointerId, {
+    x: event.clientX,
+    y: event.clientY
+  });
+
+  if (pointers.size >= 2) {
+    const pinch = pinchData();
+
+    if (lastPinchDistance && lastPinchCenter) {
+      offsetX += pinch.x - lastPinchCenter.x;
+      offsetY += pinch.y - lastPinchCenter.y;
+
+      zoomAt(
+        scale * pinch.distance / lastPinchDistance,
+        pinch.x,
+        pinch.y
+      );
+    }
+
+    lastPinchDistance = pinch.distance;
+    lastPinchCenter = { x: pinch.x, y: pinch.y };
+  } else if (scale > 1) {
+    offsetX += event.clientX - old.x;
+    offsetY += event.clientY - old.y;
+    limitOffsets();
+    applyTransform();
+  }
+});
+
+function releasePointer(event) {
+  pointers.delete(event.pointerId);
+  lastPinchDistance = null;
+  lastPinchCenter = null;
+
+  if (pointers.size === 0) {
+    viewport.classList.remove("dragging");
+  }
+}
+
+viewport.addEventListener("pointerup", releasePointer);
+viewport.addEventListener("pointercancel", releasePointer);
+
+window.addEventListener("resize", () => {
+  if (dialog.open) {
+    limitOffsets();
+    applyTransform();
+  }
+});
+</script>
 </body>
 </html>
