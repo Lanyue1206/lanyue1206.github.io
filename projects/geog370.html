@@ -359,13 +359,13 @@ const projects = [
     methods: "Heatmap, Point Density Visualization",
     data: "Chapel Hill Crime Data",
     maps: [
-      ["Chapel Hill Crime Density", "geog370-l5-crime.jpg"]
+      ["Larceny Density Map 2024", "geog370-l5-larceny.jpg"],
+      ["Chapel Hill Crime Map 2024", "geog370-l5-crime.jpg"]
     ],
-    description: [
-      "This project investigates the spatial distribution of reported crime in Chapel Hill, North Carolina.",
-      "Using crime location data, I created density visualizations to identify geographic concentrations of reported incidents. Heatmaps were used to communicate differences in the intensity of crime patterns across the study area.",
-      "The resulting map highlights how point-based spatial data can be transformed into a continuous visual representation of localized concentrations."
-    ]
+    description: ["This project examines the spatial distribution of reported crime in Chapel Hill, North Carolina, using crime data from 2024.",
+                  "I created two maps to compare different crime patterns. The first focuses specifically on larceny incidents, using a density heatmap to identify areas where theft-related crimes are concentrated. The second visualizes the broader distribution of reported crime, allowing comparisons between larceny hotspots and overall crime patterns.",
+                  "By combining point locations with density visualization, the maps reveal spatial concentrations of reported incidents and demonstrate how GIS can support exploratory crime pattern analysis."
+                 ]
   },
 
   {
@@ -416,9 +416,8 @@ const projects = [
     methods: "Multi-Criteria Risk Modeling, Index Construction",
     data: "USDA Food Environment Atlas",
     maps: [
-      ["Food Access Risk Index", "geog370-final-risk.jpg"],
-      ["Vulnerability Index", "geog370-final-vulnerability.jpg"]
-    ],
+    ["Food Access Risk Index", "geog370-final-risk.jpg"]
+      ],
     description: [
       "This research project investigates which areas in the United States have the highest food access risk for older adults.",
       "I constructed a spatial risk assessment framework combining hazard and vulnerability indicators. Hazard measures included food store accessibility, grocery store availability, and metropolitan status. Vulnerability measures incorporated socioeconomic and demographic characteristics such as poverty, vehicle access, and the concentration of older residents.",
