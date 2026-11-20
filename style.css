@@ -93,7 +93,7 @@ h1, h2, h3, p {
 
 .display-title {
   font-family: var(--serif);
-  font-size: clamp(64px, 9vw, 110px);
+  font-size: clamp(64px, 9vw, 70px);
   font-weight: 600;
   line-height: 1.02;
   letter-spacing: -0.025em;
