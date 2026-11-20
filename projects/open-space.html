@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Open Space in the Tri-Metro Region — Lanyue Zhang</title>
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    .detail-page {
+      padding-top: 55px;
+      padding-bottom: 110px;
+    }
+
+    .back-link {
+      font-size: 12px;
+      color: #777;
+      letter-spacing: 0.04em;
+    }
+
+    .project-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      gap: 65px;
+      align-items: start;
+      margin-top: 55px;
+    }
+
+    .map-large {
+      width: 100%;
+      height: auto;
+      cursor: zoom-in;
+      background: #efeee9;
+    }
+
+    .zoom-caption {
+      font-size: 12px;
+      color: #777;
+      margin-top: 12px;
+    }
+
+    .detail-info {
+      position: sticky;
+      top: 35px;
+    }
+
+    .detail-info h1 {
+      font-family: var(--serif);
+      font-size: clamp(42px, 4vw, 65px);
+      font-weight: 600;
+      line-height: 1.08;
+      margin: 15px 0 35px;
+    }
+
+    .info-heading {
+      font-size: 11px;
+      font-weight: 600;
+      color: #777;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    .detail-info p {
+      font-size: 14px;
+      color: #484848;
+      line-height: 1.9;
+    }
+
+    .info-block {
+      border-top: 1px solid #e3e2df;
+      padding-top: 23px;
+      margin-top: 28px;
+    }
+
+    .metadata {
+      display: grid;
+      grid-template-columns: 95px 1fr;
+      gap: 12px;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .metadata span:nth-child(odd) {
+      color: #888;
+    }
+
+    /* Image enlargement */
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(15,15,15,0.94);
+      padding: 55px 20px 20px;
+      overflow: auto;
+      text-align: center;
+    }
+
+    .lightbox.open {
+      display: block;
+    }
+
+    .lightbox img {
+      display: block;
+      max-width: none;
+      width: auto;
+      max-height: none;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      right: 25px;
+      top: 15px;
+      font-size: 30px;
+      color: white;
+      background: none;
+      border: 0;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    @media (max-width: 800px) {
+      .project-layout {
+        grid-template-columns: 1fr;
+        gap: 35px;
+      }
+
+      .detail-info {
+        position: static;
+      }
+
+      .detail-page {
+        padding-top: 35px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a class="logo" href="../index.html">LANYUE ZHANG</a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a class="active" href="../work.html">Work</a>
+      <a href="../research.html">Research</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main class="container detail-page">
+
+  <a class="back-link" href="../work.html">
+    ← ALL WORK / 2026
+  </a>
+
+  <div class="project-layout">
+
+    <!-- Map -->
+    <div>
+      <img
+        class="map-large"
+        id="projectMap"
+        src="../images/a7-open-space.png"
+        alt="Open Space in the Tri-Metro Region infographic"
+        onclick="openLightbox()"
+      >
+      <p class="zoom-caption">
+        Click the map to view the full-resolution image.
+      </p>
+    </div>
+
+    <!-- Description -->
+    <div class="detail-info">
+
+      <p class="eyebrow">PROJECT 01 / GIS INFOGRAPHIC</p>
+
+      <h1>Open Space in the Tri-Metro Region</h1>
+
+      <div class="info-block">
+        <div class="info-heading">Description</div>
+
+        <p>
+          This project examines the distribution of parkland
+          across Clackamas, Multnomah, and Washington counties
+          in the Portland Tri-Metro region.
+        </p>
+
+        <p>
+          Using ArcGIS Pro, I combined spatial analysis,
+          thematic mapping, and statistical visualization
+          to communicate patterns of open space to a general
+          audience. I calculated park acreage and the
+          percentage of county land designated as parks,
+          then presented the results through a map,
+          two bar charts, and key statistics.
+        </p>
+
+        <p>
+          The analysis identified Clackamas County as
+          having the largest amount of parkland, with
+          approximately 79,000 acres, representing about
+          6.5% of its area.
+        </p>
+      </div>
+
+      <div class="info-block">
+        <div class="info-heading">Project Information</div>
+
+        <div class="metadata">
+          <span>Year</span>
+          <span>2026</span>
+
+          <span>Software</span>
+          <span>ArcGIS Pro</span>
+
+          <span>Methods</span>
+          <span>Summarize Within, Buffer Analysis,
+          Statistical Visualization</span>
+
+          <span>Data</span>
+          <span>GEOG 455 course GIS datasets</span>
+
+          <span>Category</span>
+          <span>GIS & Cartography</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© Lanyue Zhang</span>
+    <span>GIS · Cartography · Environmental Research</span>
+  </div>
+</footer>
+
+<!-- Zoom viewer -->
+<div id="lightbox" class="lightbox"
+     role="dialog" aria-modal="true"
+     aria-label="Enlarged project map">
+
+  <button class="lightbox-close"
+          aria-label="Close image"
+          onclick="closeLightbox()">×</button>
+
+  <img src="../images/a7-open-space.png"
+       alt="Enlarged Open Space infographic">
+</div>
+
+<script>
+  function openLightbox() {
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      closeLightbox();
+    }
+  });
+</script>
+
+</body>
+</html>
