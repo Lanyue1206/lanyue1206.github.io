@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
 :root {
   --background: #faf9f6;
   --white: #ffffff;
@@ -94,7 +93,7 @@ h1, h2, h3, p {
 
 .display-title {
   font-family: var(--serif);
-  font-size: clamp(64px, 9vw, 124px);
+  font-size: clamp(64px, 9vw, 110px);
   font-weight: 600;
   line-height: 1.02;
   letter-spacing: -0.025em;
