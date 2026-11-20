@@ -34,13 +34,48 @@
   </section>
 
   <section class="year-section container">
+    
+<div class="portfolio-filters">
+
+  <div class="filter-group">
+    <span class="filter-label">Filter By Theme</span>
+
+    <div class="filter-options" id="themeFilters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="environment">Environment</button>
+      <button class="filter-btn" data-filter="hydrology">Hydrology</button>
+      <button class="filter-btn" data-filter="population">Population</button>
+      <button class="filter-btn" data-filter="transportation">Transportation</button>
+      <button class="filter-btn" data-filter="terrain">Terrain</button>
+      <button class="filter-btn" data-filter="cartography">Cartography</button>
+    </div>
+  </div>
+
+  <div class="filter-group">
+    <span class="filter-label">Filter By Location</span>
+
+    <div class="filter-options" id="locationFilters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="portland">Portland</button>
+      <button class="filter-btn" data-filter="atlanta">Atlanta</button>
+    </div>
+  </div>
+
+  <div class="filter-summary">
+    <span id="resultCount">6 projects</span>
+    <button id="clearFilters" type="button">Clear filters</button>
+  </div>
+
+</div>
+
     <h2 class="year-heading">2026</h2>
 
     <div class="project-grid">
 
-      <a class="project-card"
-   id="open-space"
-   href="projects/open-space.html">
+      <a class="project-card" id="open-space"
+   href="projects/open-space.html"
+   data-theme="environment cartography"
+   data-location="portland">
         <div class="project-image">
           <img src="images/a7-open-space.png"
                alt="Open Space in the Tri-Metro Region">
@@ -54,7 +89,10 @@
         </div>
       </a>
 
-      <a class="project-card" id="atlanta" 	href="projects/atlanta.html">
+      <a class="project-card" id="atlanta"
+   href="projects/atlanta.html"
+   data-theme="terrain hydrology population transportation"
+   data-location="atlanta">
         <div class="project-image">
           <img src="images/p2-atlanta.png"
                alt="Atlanta Geographic Overview">
@@ -68,7 +106,10 @@
         </div>
       </a>
 
-      <a class="project-card" id="hydrography" href="projects/hydrography.html">
+      <a class="project-card" id="hydrography"
+   href="projects/hydrography.html"
+   data-theme="hydrology environment"
+   data-location="portland">
         <div class="project-image">
           <img src="images/a5-hydrography.png"
                alt="Portland Hydrography and Parks">
@@ -82,7 +123,10 @@
         </div>
       </a>
 
-      <a class="project-card" id="choropleth" href="projects/choropleth.html">
+      <a class="project-card" id="choropleth"
+   href="projects/choropleth.html"
+   data-theme="population cartography"
+   data-location="portland">
         <div class="project-image">
           <img src="images/a3-choropleth.jpg"
                alt="Choropleth Classification Methods">
@@ -96,7 +140,10 @@
         </div>
       </a>
 
-      <a class="project-card" id="transportation" href="projects/transportation.html">
+      <a class="project-card" id="transportation"
+   href="projects/transportation.html"
+   data-theme="transportation cartography"
+   data-location="portland">
         <div class="project-image">
           <img src="images/a6-transportation.png"
                alt="Tri-Metro Regional Transportation Map">
@@ -110,7 +157,10 @@
         </div>
       </a>
 
-      <a class="project-card" id="population" href="projects/population.html">
+      <a class="project-card" id="population"
+   href="projects/population.html"
+   data-theme="population cartography"
+   data-location="portland">
         <div class="project-image">
           <img src="images/a2-population.png"
                alt="Population Distribution Across Portland">
@@ -136,5 +186,88 @@
   </div>
 </footer>
 
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll(".project-card");
+
+  const themeButtons = document.querySelectorAll(
+    "#themeFilters .filter-btn"
+  );
+
+  const locationButtons = document.querySelectorAll(
+    "#locationFilters .filter-btn"
+  );
+
+  let selectedTheme = "all";
+  let selectedLocation = "all";
+
+  function updateProjects() {
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+      const themes = card.dataset.theme.split(" ");
+      const location = card.dataset.location;
+
+      const matchesTheme =
+        selectedTheme === "all" ||
+        themes.includes(selectedTheme);
+
+      const matchesLocation =
+        selectedLocation === "all" ||
+        location === selectedLocation;
+
+      const visible = matchesTheme && matchesLocation;
+
+      card.hidden = !visible;
+
+      if (visible) visibleCount++;
+    });
+
+    document.getElementById("resultCount").textContent =
+      visibleCount + (visibleCount === 1 ? " project" : " projects");
+  }
+
+  function setupFilters(buttons, type) {
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        buttons.forEach(b => b.classList.remove("active"));
+        button.classList.add("active");
+
+        if (type === "theme") {
+          selectedTheme = button.dataset.filter;
+        } else {
+          selectedLocation = button.dataset.filter;
+        }
+
+        updateProjects();
+      });
+    });
+  }
+
+  setupFilters(themeButtons, "theme");
+  setupFilters(locationButtons, "location");
+
+  document.getElementById("clearFilters")
+    .addEventListener("click", () => {
+      selectedTheme = "all";
+      selectedLocation = "all";
+
+      document.querySelectorAll(".filter-btn")
+        .forEach(button => {
+          button.classList.toggle(
+            "active",
+            button.dataset.filter === "all"
+          );
+        });
+
+      updateProjects();
+    });
+
+  updateProjects();
+});
+</script>
+
+  
 </body>
 </html>
