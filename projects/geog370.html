@@ -1,0 +1,547 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEOG 370 Projects — Lanyue Zhang</title>
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.detail-page {
+  padding-top: 55px;
+  padding-bottom: 100px;
+}
+
+.back-link {
+  font-size: 12px;
+  color: #777;
+  letter-spacing: .05em;
+}
+
+.project-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+  gap: 65px;
+  align-items: start;
+  margin-top: 55px;
+}
+
+.map-button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.map-button img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.map-caption {
+  margin: 12px 0 24px;
+  color: #777;
+  font-size: 12px;
+}
+
+.map-selector {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.map-choice {
+  padding: 0;
+  width: 100px;
+  border: 1px solid #deddd9;
+  background: none;
+  cursor: pointer;
+  opacity: .65;
+}
+
+.map-choice.active {
+  border-color: #1c1c1c;
+  opacity: 1;
+}
+
+.map-choice img {
+  display: block;
+  width: 100%;
+  height: 70px;
+  object-fit: contain;
+}
+
+.map-name {
+  color: #777;
+  font-size: 12px;
+  margin-top: 12px;
+}
+
+.detail-info {
+  position: sticky;
+  top: 35px;
+}
+
+.detail-info h1 {
+  font-family: var(--serif);
+  font-size: clamp(42px, 4vw, 65px);
+  font-weight: 600;
+  line-height: 1.08;
+  margin: 15px 0 35px;
+}
+
+.detail-info p {
+  font-size: 14px;
+  color: #484848;
+  line-height: 1.9;
+}
+
+.info-block {
+  border-top: 1px solid var(--line);
+  padding-top: 23px;
+  margin-top: 28px;
+}
+
+.info-heading {
+  font-size: 11px;
+  font-weight: 600;
+  color: #777;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+.metadata {
+  display: grid;
+  grid-template-columns: 95px 1fr;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.metadata dt { color: #888; }
+.metadata dd { margin: 0; }
+
+.project-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  border-top: 1px solid var(--line);
+  margin-top: 75px;
+  padding-top: 30px;
+}
+
+.project-navigation a {
+  font-family: var(--serif);
+  font-size: 23px;
+}
+
+.project-navigation span {
+  display: block;
+  font-family: var(--sans);
+  color: #888;
+  font-size: 11px;
+  letter-spacing: .08em;
+  margin-bottom: 9px;
+}
+
+.zoom-dialog {
+  position: fixed;
+  inset: 0;
+  width: 96vw;
+  height: 94vh;
+  max-width: none;
+  max-height: none;
+  border: 0;
+  padding: 65px 20px 25px;
+  background: #171717;
+  overflow: auto;
+  text-align: center;
+}
+
+.zoom-dialog::backdrop {
+  background: rgba(0,0,0,.85);
+}
+
+.zoom-dialog img {
+  display: block;
+  max-width: none;
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+}
+
+.zoom-close {
+  position: fixed;
+  right: 35px;
+  top: 25px;
+  background: #171717;
+  border: 0;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+@media (max-width: 800px) {
+  .project-layout {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+  .detail-info { position: static; }
+  .detail-page { padding-top: 35px; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a class="logo" href="../index.html">LANYUE ZHANG</a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a class="active" href="../work.html">Work</a>
+      <a href="../research.html">Research</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main class="container detail-page">
+  <a class="back-link" href="../work.html">
+    ← ALL WORK / 2026
+  </a>
+
+  <div class="project-layout">
+
+    <div>
+      <button class="map-button" id="mapButton"
+              aria-label="Enlarge map">
+        <img id="mainMap" alt="Project map">
+      </button>
+
+      <p class="map-caption">
+        Click the map to view the full-resolution image.
+      </p>
+
+      <div class="map-selector" id="mapSelector"></div>
+      <p class="map-name" id="mapName"></p>
+    </div>
+
+    <div class="detail-info">
+      <p class="eyebrow" id="projectCategory"></p>
+      <h1 id="projectTitle"></h1>
+
+      <div class="info-block">
+        <div class="info-heading">Description</div>
+        <div id="projectDescription"></div>
+      </div>
+
+      <div class="info-block">
+        <div class="info-heading">Project Information</div>
+        <dl class="metadata" id="projectMetadata"></dl>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="project-navigation" id="navigation"></div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© Lanyue Zhang</span>
+    <span>Portfolio</span>
+  </div>
+</footer>
+
+<dialog class="zoom-dialog" id="zoomDialog"
+        aria-label="Full-resolution map">
+  <button class="zoom-close" id="zoomClose"
+          aria-label="Close image">×</button>
+  <img id="zoomImage" alt="Enlarged project map">
+</dialog>
+
+<script>
+const projects = [
+  {
+    id: "digital-divide",
+    number: "07",
+    title: "Mapping the Digital Divide",
+    category: "INTERNET ACCESS / SPATIAL INEQUALITY",
+    location: "United States",
+    tools: "GIS / Thematic Mapping",
+    methods: "Attribute Mapping, Spatial Comparison",
+    data: "Internet Accessibility Data",
+    maps: [
+      ["Internet Bandwidth", "geog370-p1-bandwidth.png"],
+      ["Households Without Internet", "geog370-p1-no-internet.png"]
+    ],
+    description: [
+      "This project investigates geographic differences in internet access by comparing two indicators: internet bandwidth and households without internet access.",
+      "I used thematic maps to visualize how access to digital infrastructure varies spatially. Comparing these measures provides different perspectives on the digital divide, including differences in connection availability and household connectivity.",
+      "The paired maps demonstrate how cartographic visualization can communicate socioeconomic inequalities in access to technology."
+    ]
+  },
+
+  {
+    id: "nc-income",
+    number: "08",
+    title: "Median Household Income in North Carolina",
+    category: "CENSUS DATA / SOCIOECONOMIC GEOGRAPHY",
+    location: "North Carolina",
+    tools: "ArcGIS Pro",
+    methods: "Choropleth Mapping, Data Classification",
+    data: "2024 American Community Survey",
+    maps: [
+      ["Median Household Income", "geog370-p2-income.jpg"]
+    ],
+    description: [
+      "This project maps median household income across North Carolina counties using data from the 2024 American Community Survey.",
+      "I joined census attributes to county boundaries and classified income values to create a choropleth map. The final layout combines geographic context, a graduated color scheme, a legend, and supporting cartographic elements.",
+      "The map provides a visual comparison of county-level income differences and demonstrates the use of census data in socioeconomic mapping."
+    ]
+  },
+
+  {
+    id: "carrboro-vulnerability",
+    number: "09",
+    title: "Socioeconomic Vulnerability in Carrboro",
+    category: "SOCIAL VULNERABILITY / SPATIAL ANALYSIS",
+    location: "Carrboro, North Carolina",
+    tools: "ArcGIS Pro",
+    methods: "Attribute Queries, Census Analysis",
+    data: "2020 U.S. Census",
+    maps: [
+      ["Carrboro Poverty Rate", "geog370-l3-poverty.jpg"]
+    ],
+    description: [
+      "This project explores socioeconomic vulnerability in Carrboro, North Carolina, using census block group data.",
+      "I mapped areas with high poverty rates to identify populations experiencing economic disadvantage. For an additional analysis, I examined overlapping vulnerability indicators including poverty, the percentage of residents aged 65 and older, and unemployment.",
+      "The project demonstrates how attribute queries and demographic data can support spatial identification of potentially underserved communities."
+    ]
+  },
+
+  {
+    id: "historical-maps",
+    number: "10",
+    title: "Historical Map Georeferencing",
+    category: "HISTORICAL GIS / GEOREFERENCING",
+    location: "Carrboro / Brooklyn",
+    tools: "GIS",
+    methods: "Georeferencing, Control Point Matching",
+    data: "Historical Maps and Reference Basemaps",
+    maps: [
+      ["Carrboro Historical Map", "geog370-l4-carrboro.jpg"],
+      ["Brooklyn Historical Map", "geog370-l4-brooklyn.jpg"]
+    ],
+    description: [
+      "This project examines how historical maps can be aligned with contemporary geographic reference data.",
+      "I practiced georeferencing using historical map imagery and a USGS historical topographic map. The workflow involved locating corresponding features, selecting control points, and adjusting the historical maps to match modern spatial coordinates.",
+      "Working with Carrboro and Brooklyn demonstrated how the availability of recognizable street patterns can influence the georeferencing process."
+    ]
+  },
+
+  {
+    id: "crime-density",
+    number: "11",
+    title: "Crime Density in Chapel Hill",
+    category: "CRIME MAPPING / SPATIAL DENSITY",
+    location: "Chapel Hill, North Carolina",
+    tools: "GIS",
+    methods: "Heatmap, Point Density Visualization",
+    data: "Chapel Hill Crime Data",
+    maps: [
+      ["Chapel Hill Crime Density", "geog370-l5-crime.jpg"]
+    ],
+    description: [
+      "This project investigates the spatial distribution of reported crime in Chapel Hill, North Carolina.",
+      "Using crime location data, I created density visualizations to identify geographic concentrations of reported incidents. Heatmaps were used to communicate differences in the intensity of crime patterns across the study area.",
+      "The resulting map highlights how point-based spatial data can be transformed into a continuous visual representation of localized concentrations."
+    ]
+  },
+
+  {
+    id: "colorado-terrain",
+    number: "12",
+    title: "Terrain Analysis in Central Colorado",
+    category: "TERRAIN / RASTER ANALYSIS",
+    location: "Colorado",
+    tools: "GIS / Terrain Modeling",
+    methods: "Elevation, Slope, Hillshade, Contours",
+    data: "Digital Elevation Model",
+    maps: [
+      ["Central Colorado Terrain", "geog370-l6-colorado.jpg"]
+    ],
+    description: [
+      "This project examines the topographic characteristics of Central Colorado using digital elevation data.",
+      "I generated terrain representations including elevation, slope, hillshade, and contour lines. I adjusted contour intervals and visualization settings to accommodate the region's steep and complex relief.",
+      "The final maps demonstrate how different terrain derivatives reveal complementary aspects of mountainous landscapes."
+    ]
+  },
+
+  {
+    id: "orange-terrain",
+    number: "13",
+    title: "Terrain Analysis in Orange County",
+    category: "TERRAIN / RASTER ANALYSIS",
+    location: "Orange County, North Carolina",
+    tools: "GIS / Terrain Modeling",
+    methods: "Elevation, Slope, Hillshade, Contours",
+    data: "Digital Elevation Model",
+    maps: [
+      ["Orange County and Chapel Hill Terrain", "geog370-l6-orange.jpg"]
+    ],
+    description: [
+      "This project visualizes terrain patterns in Orange County and Chapel Hill, North Carolina, using digital elevation data.",
+      "I applied a repeatable geoprocessing workflow to generate elevation, slope, hillshade, and contour maps. Compared with Central Colorado, the gentler topography required different visualization choices to communicate subtle elevation differences.",
+      "The project illustrates how terrain analysis methods can be adapted to geographic regions with contrasting relief."
+    ]
+  },
+
+  {
+    id: "food-access",
+    number: "14",
+    title: "Food Access Risk for Older Adults",
+    category: "FOOD ACCESS / RISK MODELING",
+    location: "United States",
+    tools: "GIS / Spatial Analysis",
+    methods: "Multi-Criteria Risk Modeling, Index Construction",
+    data: "USDA Food Environment Atlas",
+    maps: [
+      ["Food Access Risk Index", "geog370-final-risk.jpg"],
+      ["Vulnerability Index", "geog370-final-vulnerability.jpg"]
+    ],
+    description: [
+      "This research project investigates which areas in the United States have the highest food access risk for older adults.",
+      "I constructed a spatial risk assessment framework combining hazard and vulnerability indicators. Hazard measures included food store accessibility, grocery store availability, and metropolitan status. Vulnerability measures incorporated socioeconomic and demographic characteristics such as poverty, vehicle access, and the concentration of older residents.",
+      "By integrating multiple indicators into composite indices, the project explores spatial differences in potential food access barriers and identifies areas that may warrant closer investigation."
+    ]
+  }
+];
+
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+const index = projects.findIndex(p => p.id === id);
+const project = projects[index];
+
+if (!project) {
+  document.querySelector("main").innerHTML =
+    '<h1>Project not found</h1><p><a href="../work.html">Return to Work</a></p>';
+} else {
+  document.title = project.title + " — Lanyue Zhang";
+
+  const imgPath = file => "../images/" + file;
+  const mainMap = document.getElementById("mainMap");
+  const zoomImage = document.getElementById("zoomImage");
+
+  document.getElementById("projectCategory").textContent =
+    "PROJECT " + project.number + " / " + project.category;
+
+  document.getElementById("projectTitle").textContent =
+    project.title;
+
+  const desc = document.getElementById("projectDescription");
+  project.description.forEach(paragraph => {
+    const p = document.createElement("p");
+    p.textContent = paragraph;
+    desc.appendChild(p);
+  });
+
+  const metadata = {
+    Year: "2026",
+    Course: "GEOG 370",
+    Software: project.tools,
+    Methods: project.methods,
+    Data: project.data,
+    Location: project.location
+  };
+
+  const dl = document.getElementById("projectMetadata");
+  Object.entries(metadata).forEach(([key, value]) => {
+    const dt = document.createElement("dt");
+    const dd = document.createElement("dd");
+    dt.textContent = key;
+    dd.textContent = value;
+    dl.append(dt, dd);
+  });
+
+  const selector = document.getElementById("mapSelector");
+
+  function showMap(i) {
+    const [label, filename] = project.maps[i];
+    mainMap.src = imgPath(filename);
+    mainMap.alt = label;
+    zoomImage.src = imgPath(filename);
+    zoomImage.alt = label;
+    document.getElementById("mapName").textContent = label;
+
+    selector.querySelectorAll(".map-choice").forEach((button, j) => {
+      button.classList.toggle("active", i === j);
+      button.setAttribute("aria-pressed", String(i === j));
+    });
+  }
+
+  if (project.maps.length > 1) {
+    project.maps.forEach(([label, filename], i) => {
+      const button = document.createElement("button");
+      button.className = "map-choice";
+      button.type = "button";
+      button.title = label;
+      button.setAttribute("aria-label", "Show " + label);
+
+      const img = document.createElement("img");
+      img.src = imgPath(filename);
+      img.alt = label;
+      button.appendChild(img);
+
+      button.addEventListener("click", () => showMap(i));
+      selector.appendChild(button);
+    });
+  }
+
+  showMap(0);
+
+  const navigation = document.getElementById("navigation");
+  const prev = projects[index - 1];
+  const next = projects[index + 1];
+
+  function makeNav(item, label) {
+    const a = document.createElement("a");
+    a.href = "geog370.html?id=" + encodeURIComponent(item.id);
+
+    const heading = document.createElement("span");
+    heading.textContent = label;
+
+    a.append(heading, document.createTextNode(item.title));
+    return a;
+  }
+
+  if (prev) navigation.appendChild(makeNav(prev, "← PREVIOUS PROJECT"));
+  else navigation.appendChild(document.createElement("span"));
+
+  if (next) navigation.appendChild(makeNav(next, "NEXT PROJECT →"));
+
+  const dialog = document.getElementById("zoomDialog");
+
+  document.getElementById("mapButton")
+    .addEventListener("click", () => dialog.showModal());
+
+  document.getElementById("zoomClose")
+    .addEventListener("click", () => dialog.close());
+
+  dialog.addEventListener("click", event => {
+    if (event.target === dialog) dialog.close();
+  });
+}
+</script>
+
+</body>
+</html>
