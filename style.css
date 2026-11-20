@@ -94,10 +94,10 @@ h1, h2, h3, p {
 
 .display-title {
   font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(60px, 9vw, 135px);
-  line-height: 0.95;
-  letter-spacing: -2px;
+  font-size: clamp(64px, 9vw, 124px);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
 }
 
 .display-title em {
