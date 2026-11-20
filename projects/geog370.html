@@ -432,12 +432,29 @@
   </div>
 </footer>
 
+
 <dialog class="zoom-dialog" id="zoomDialog"
-        aria-label="Full-resolution map">
-  <button class="zoom-close" id="zoomClose"
-          aria-label="Close image">×</button>
-  <img id="zoomImage" alt="Enlarged project map">
+        aria-label="Interactive map viewer">
+
+  <div class="zoom-toolbar">
+    <button id="zoomOut" aria-label="Zoom out">−</button>
+    <button id="zoomIn" aria-label="Zoom in">+</button>
+    <button id="zoomReset" aria-label="Reset zoom">Reset</button>
+    <button id="zoomClose" aria-label="Close image">×</button>
+  </div>
+
+  <div class="zoom-viewport" id="zoomViewport">
+    <img id="zoomImage"
+         alt="Enlarged project map"
+         draggable="false">
+  </div>
+
+  <div class="zoom-hint">
+    Scroll to zoom · Drag to move · Double-click to zoom
+  </div>
+
 </dialog>
+
 
 <script>
 const projects = [
