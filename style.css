@@ -1,11 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&family=Manrope:wght@400;500;600;700&display=swap');
+
 :root {
   --background: #faf9f6;
   --white: #ffffff;
   --text: #1c1c1c;
   --muted: #777777;
   --line: #e3e2df;
-  --serif: 'Cormorant Garamond', Georgia, serif;
+  --serif: 'Newsreader', Georgia, serif;
   --sans: 'Manrope', Arial, sans-serif;
 }
 
@@ -68,6 +70,8 @@ img {
 
 .nav-links a {
   font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   color: var(--muted);
   transition: color 0.2s;
 }
@@ -93,30 +97,30 @@ h1, h2, h3, p {
 
 .display-title {
   font-family: var(--serif);
-  font-size: clamp(64px, 9vw, 70px);
-  font-weight: 600;
-  line-height: 1.02;
+  font-size: clamp(58px, 8vw, 90px);
+  font-weight: 700;
+  line-height: 1.08;
   letter-spacing: -0.025em;
-}
-
-.display-title em {
-  font-weight: 400;
 }
 
 .section-title {
   font-family: var(--serif);
+  font-size: clamp(42px, 6vw, 70px);
   font-weight: 600;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
 }
 
 .body-text {
-  color: #555;
-  font-size: 16px;
-  line-height: 1.9;
   max-width: 680px;
+  color: #484848;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.9;
+  letter-spacing: -0.01em;
 }
 
-/* Home hero */
+/* Home Hero */
 
 .hero {
   padding: 115px 0 125px;
@@ -129,9 +133,11 @@ h1, h2, h3, p {
 .hero-description {
   max-width: 560px;
   margin-top: 38px;
-  color: var(--muted);
-  font-size: 16px;
-  line-height: 1.85;
+  color: #484848;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.9;
+  letter-spacing: -0.01em;
 }
 
 /* Sections */
@@ -158,7 +164,7 @@ h1, h2, h3, p {
   padding-bottom: 5px;
 }
 
-/* Project gallery */
+/* Project Gallery */
 
 .project-grid {
   display: grid;
@@ -196,18 +202,20 @@ h1, h2, h3, p {
 
 .project-name {
   font-family: var(--serif);
-  font-size: 29px;
-  font-weight: 400;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.2;
   margin: 0;
 }
 
 .project-type {
   color: var(--muted);
   font-size: 12px;
+  letter-spacing: 0.02em;
   margin-top: 7px;
 }
 
-/* Work archive */
+/* Work Archive */
 
 .page-intro {
   padding: 95px 0 65px;
@@ -216,7 +224,7 @@ h1, h2, h3, p {
 .year-heading {
   font-family: var(--serif);
   font-size: 65px;
-  font-weight: 400;
+  font-weight: 500;
   border-top: 1px solid var(--line);
   padding-top: 25px;
   margin-bottom: 45px;
@@ -226,7 +234,7 @@ h1, h2, h3, p {
   padding-bottom: 110px;
 }
 
-/* About and project details */
+/* About and Project Details */
 
 .content-page {
   padding: 95px 0 120px;
@@ -235,7 +243,7 @@ h1, h2, h3, p {
 .content-page h1 {
   font-family: var(--serif);
   font-size: clamp(55px, 8vw, 100px);
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .project-detail-image {
@@ -267,7 +275,7 @@ h1, h2, h3, p {
   gap: 20px;
 }
 
-/* Mobile layout */
+/* Responsive Layout */
 
 @media (max-width: 700px) {
   .container {
@@ -294,11 +302,15 @@ h1, h2, h3, p {
   }
 
   .display-title {
-    font-size: 63px;
+    font-size: clamp(43px, 9vw, 64px);
   }
 
   .section {
     padding: 55px 0 80px;
+  }
+
+  .section-heading {
+    align-items: flex-start;
   }
 
   .project-grid {
@@ -317,49 +329,5 @@ h1, h2, h3, p {
 
   .footer-inner {
     flex-direction: column;
-  }
-}
-
-
-/* Editorial typography */
-
-.display-title {
-  font-family: var(--serif);
-  font-size: clamp(64px, 9vw, 124px);
-  font-weight: 500;
-  line-height: 1.02;
-  letter-spacing: -0.025em;
-}
-
-.section-title {
-  font-family: var(--serif);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-}
-
-.project-name {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: 32px;
-}
-
-.hero-description,
-.body-text {
-  font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.9;
-  letter-spacing: -0.01em;
-  color: #484848;
-}
-
-.nav-links a {
-  font-weight: 500;
-  letter-spacing: 0.01em;
-}
-
-@media (max-width: 700px) {
-  .display-title {
-    font-size: clamp(48px, 10vw, 70px);
   }
 }
