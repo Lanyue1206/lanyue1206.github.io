@@ -106,9 +106,8 @@ h1, h2, h3, p {
 
 .section-title {
   font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(42px, 6vw, 76px);
-  line-height: 1.05;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 .body-text {
