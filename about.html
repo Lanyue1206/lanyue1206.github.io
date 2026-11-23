@@ -13,6 +13,7 @@
       <div class="nav-links">
         <a href="index.html">Home</a>
         <a class="active" href="about.html" aria-current="page">About</a>
+        <a href="#portfolio-contact">Contact</a>
       </div>
     </nav>
   </header>
@@ -38,10 +39,94 @@
           <h1>About Me</h1>
           <p>I’m Lanyue Zhang, an undergraduate at the University of North Carolina at Chapel Hill double majoring in Biology and Geospatial Data Science, with a minor in Data Science. I expect to graduate in May 2027.</p>
           <p>In spring 2025, I studied abroad at the University of St Andrews in Scotland, where I took courses in ecology, animal behaviour, vertebrate zoology, and geography.</p>
-          <p>My research uses airborne LiDAR to study changes in forest structure and aboveground biomass. At UNC, I also tutor students in GIS at the Learning Center and mentor first-generation, first-year students through HeelGuide.</p>
+          <p>My research uses airborne LiDAR to study changes in forest structure and aboveground biomass. At UNC, I tutor students in GIS at the Learning Center and mentor first-generation, first-year students through HeelGuide, a peer mentoring program run by UNC’s Center for Student Success.</p>
         </div>
       </div>
     </section>
-  </main>
+  <!-- BEGIN PORTFOLIO CONTACT -->
+<section class="container portfolio-contact" id="portfolio-contact">
+  <h2>Contact</h2>
+  <p>Feel free to reach out about GIS, remote sensing, or environmental research.</p>
+  <p class="contact-links">
+    <a href="mailto:zhanglanyue1206@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/lanyue-zhang-842455325/">LinkedIn</a>
+  </p>
+  <form id="portfolio-message" action="https://api.web3forms.com/submit" method="post">
+    <input type="hidden" name="access_key" value="0db3ba28-0ea1-43e6-95ed-aa1ddf6fd6a7">
+    <input type="hidden" name="subject" value="New message from your GIS portfolio">
+    <input type="checkbox" name="botcheck" hidden tabindex="-1">
+    <label for="contact-email">Your email (optional)</label>
+    <input id="contact-email" type="email" name="email" autocomplete="email">
+    <label for="contact-message">Message</label>
+    <textarea id="contact-message" name="message" rows="4" maxlength="1000" required></textarea>
+    <button type="submit">Send Message</button>
+    <p role="status"></p>
+  </form>
+</section>
+
+<style>
+  .portfolio-contact {
+    max-width: 720px;
+    margin-block: 3rem 5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line, #dedbd4);
+    scroll-margin-top: 2rem;
+  }
+  .portfolio-contact h2 {
+    margin: 0 0 0.75rem;
+    font: 600 clamp(2rem, 5vw, 3rem)/1.1 var(--serif, Georgia);
+  }
+  .contact-links { display: flex; gap: 1.25rem; }
+  .contact-links a { text-decoration: underline; text-underline-offset: 0.2em; }
+  #portfolio-message { display: grid; gap: 0.65rem; margin-top: 1.5rem; }
+  #portfolio-message :is(input[type="email"], textarea, button) {
+    border: 1px solid var(--line, #dedbd4);
+    border-radius: 4px;
+    padding: 0.7rem 0.85rem;
+    font: inherit;
+    color: inherit;
+    background: transparent;
+  }
+  #portfolio-message textarea { resize: vertical; }
+  #portfolio-message button { justify-self: start; cursor: pointer; }
+  #portfolio-message [role="status"] { margin: 0; }
+</style>
+
+<script>
+(() => {
+  const form = document.getElementById("portfolio-message");
+  const button = form.querySelector("button");
+  const status = form.querySelector('[role="status"]');
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const email = String(data.get("email") || "").trim();
+    if (email) data.set("replyto", email);
+    else data.delete("email");
+
+    button.disabled = true;
+    status.textContent = "Sending…";
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: data
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error("Submission failed");
+      form.reset();
+      status.textContent = "Thanks! Your message was sent.";
+    } catch {
+      status.textContent = "Could not send your message. Please try again or use the Email link.";
+    } finally {
+      button.disabled = false;
+    }
+  });
+})();
+</script>
+<!-- END PORTFOLIO CONTACT -->
+</main>
 </body>
 </html>

@@ -660,3 +660,89 @@ body .analysis-header h2 {
                        100% calc(100% - 40px), 100% 100%, 0 100%);
   }
 }
+
+/* Decorative contours on the homepage */
+.home-intro {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+
+.home-intro-contours {
+  position: absolute;
+  z-index: -1;
+  right: -2%;
+  top: 50%;
+  width: min(43%, 34rem);
+  height: auto;
+  transform: translateY(-48%) rotate(-16deg);
+  fill: none;
+  stroke: #7d815a;
+  stroke-width: 1;
+  opacity: 0.20;
+  mask-image: radial-gradient(ellipse at 75% 50%, #000 23%, transparent 73%);
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .home-intro-contours {
+    right: -20%;
+    top: 62%;
+    width: 82%;
+    opacity: 0.15;
+  }
+}
+
+/* Homepage photo background */
+.home-photo-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  padding-inline: max(6%, 1rem);
+}
+
+.home-photo-hero .home-intro-contours {
+  display: none;
+}
+
+.home-photo-hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 28% 0 0;
+  pointer-events: none;
+  background: url("images/IMG_8203.JPG") 24% 72% / cover no-repeat;
+  filter: saturate(0.64);
+  opacity: 0.48;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 10%,
+    rgb(0 0 0 / 0.12) 30%,
+    rgb(0 0 0 / 0.55) 65%,
+    black 100%
+  );
+}
+
+.home-photo-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 28% 0 0;
+  pointer-events: none;
+  background: linear-gradient(to right, transparent 62%, var(--background, #f8f7f4));
+  opacity: 0.35;
+}
+
+@media (max-width: 640px) {
+  .home-photo-hero::before,
+  .home-photo-hero::after {
+    inset-block-start: 38%;
+  }
+
+  .home-photo-hero::before {
+    background-position: 28% 72%;
+    opacity: 0.32;
+  }
+}
+/* End homepage photo background */

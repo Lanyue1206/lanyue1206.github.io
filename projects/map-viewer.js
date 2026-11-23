@@ -260,8 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
     reset();
 
     image.onload = () => {
-      constrain();
-      render();
+      zoomCenter(1.25);
     };
 
     image.src = src;

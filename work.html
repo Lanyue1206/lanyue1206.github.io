@@ -15,9 +15,9 @@
     <a class="logo" href="index.html">LANYUE ZHANG</a>
     <div class="nav-links">
       <a href="index.html">Home</a>
-      <a href="research.html">Research</a>
+
       <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
+      <a href="about.html#portfolio-contact">Contact</a>
     </div>
   </nav>
 </header>
@@ -86,7 +86,6 @@
             <h3 class="project-name">Open Space in the Tri-Metro Region</h3>
             <p class="project-type">GIS Infographic · Spatial Analysis</p>
           </div>
-          <span class="project-type">01</span>
         </div>
       </a>
 
@@ -103,7 +102,6 @@
             <h3 class="project-name">Atlanta: A Geographic Overview</h3>
             <p class="project-type">Signature Map · GIS Visualization</p>
           </div>
-          <span class="project-type">02</span>
         </div>
       </a>
       <!-- 14 GEOG 370 Final Project -->
@@ -122,7 +120,6 @@
       <h3 class="project-name">Food Access Risk for Older Adults</h3>
       <p class="project-type">Risk Modeling · Food Accessibility</p>
     </div>
-    <span class="project-type">03</span>
   </div>
 </a>
 
@@ -141,7 +138,6 @@
             <h3 class="project-name">Hydrography and Parks</h3>
             <p class="project-type">Hydrology · Cartographic Generalization</p>
           </div>
-          <span class="project-type">03</span>
         </div>
       </a>
 
@@ -158,7 +154,6 @@
             <h3 class="project-name">Choropleth Classification Methods</h3>
             <p class="project-type">Thematic Cartography · Population Density</p>
           </div>
-          <span class="project-type">04</span>
         </div>
       </a>
 
@@ -175,7 +170,6 @@
             <h3 class="project-name">Regional Transportation Map</h3>
             <p class="project-type">Transportation · Cartography</p>
           </div>
-          <span class="project-type">05</span>
         </div>
       </a>
 
@@ -192,7 +186,6 @@
             <h3 class="project-name">Population Distribution</h3>
             <p class="project-type">Proportional Symbols · Dot Density</p>
           </div>
-          <span class="project-type">06</span>
         </div>
       </a>
     
@@ -212,7 +205,6 @@
       <h3 class="project-name">Mapping the Digital Divide</h3>
       <p class="project-type">Internet Access · Spatial Inequality</p>
     </div>
-    <span class="project-type">07</span>
   </div>
 </a>
 
@@ -232,7 +224,6 @@
       <h3 class="project-name">Median Household Income in North Carolina</h3>
       <p class="project-type">Census · Socioeconomic Geography</p>
     </div>
-    <span class="project-type">08</span>
   </div>
 </a>
 
@@ -252,7 +243,6 @@
       <h3 class="project-name">Socioeconomic Vulnerability in Carrboro</h3>
       <p class="project-type">Social Vulnerability · GIS</p>
     </div>
-    <span class="project-type">09</span>
   </div>
 </a>
 
@@ -263,7 +253,7 @@
    data-location="north-carolina new-york">
 
   <div class="project-image">
-    <img src="images/geog370-l4-carrboro.jpg"
+    <img src="images/geog370-l4-brooklyn.jpg"
          alt="Historical map georeferencing" loading="lazy">
   </div>
 
@@ -272,7 +262,6 @@
       <h3 class="project-name">Historical Map Georeferencing</h3>
       <p class="project-type">Historical GIS · Georeferencing</p>
     </div>
-    <span class="project-type">10</span>
   </div>
 </a>
 
@@ -292,7 +281,6 @@
       <h3 class="project-name">Crime Density in Chapel Hill</h3>
       <p class="project-type">Heatmap · Spatial Analysis</p>
     </div>
-    <span class="project-type">11</span>
   </div>
 </a>
 
@@ -312,7 +300,6 @@
       <h3 class="project-name">Terrain Analysis in Central Colorado</h3>
       <p class="project-type">Terrain · Raster Analysis</p>
     </div>
-    <span class="project-type">12</span>
   </div>
 </a>
 
@@ -332,7 +319,6 @@
       <h3 class="project-name">Terrain Analysis in Orange County</h3>
       <p class="project-type">Terrain · GIS Modeling</p>
     </div>
-    <span class="project-type">13</span>
   </div>
 </a>
 
@@ -430,5 +416,207 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
   
+<!-- BEGIN WORK PROJECT DIALOG -->
+<style>
+  #work-project-dialog {
+    width: min(1380px, calc(100% - 3rem));
+    height: min(860px, calc(100dvh - 3rem));
+    max-width: none;
+    max-height: none;
+    padding: 0;
+    overflow: hidden;
+    color: var(--text, #222);
+    background: var(--background, #faf9f6);
+    border: 1px solid #d6d3cb;
+    border-radius: 8px;
+    box-shadow: 0 18px 70px rgb(0 0 0 / 18%);
+  }
+
+  #work-project-dialog[open] {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+
+  #work-project-dialog::backdrop {
+    background: rgb(28 28 28 / 43%);
+  }
+
+  html:has(#work-project-dialog[open]) {
+    overflow: hidden;
+  }
+
+  .work-project-toolbar,
+  .work-project-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.55rem clamp(0.8rem, 3vw, 2rem);
+  }
+
+  .work-project-toolbar {
+    justify-content: flex-end;
+  }
+
+  .work-project-controls {
+    justify-content: space-between;
+    border-top: 1px solid #dedbd4;
+  }
+
+  #work-project-dialog button {
+    min-height: 44px;
+    padding: 0.35rem 0.65rem;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    border-radius: 4px;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  #work-project-dialog button:hover:not(:disabled) {
+    background: rgb(0 0 0 / 6%);
+  }
+
+  #work-project-dialog button:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  #work-project-close {
+    min-width: 44px;
+    font-size: 1.65rem !important;
+  }
+
+  #work-project-frame {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  @media (max-width: 640px) {
+    #work-project-dialog {
+      width: calc(100% - 1rem);
+      height: calc(100dvh - 1rem);
+    }
+  }
+</style>
+
+<dialog id="work-project-dialog" aria-label="Map details">
+  <div class="work-project-toolbar">
+    <button id="work-project-close" type="button" aria-label="Close map details">×</button>
+  </div>
+  <iframe id="work-project-frame" title="Project details"></iframe>
+  <div class="work-project-controls">
+    <button id="work-project-prev" type="button">Previous Map</button>
+    <button id="work-project-next" type="button">Next Map</button>
+  </div>
+</dialog>
+
+<script>
+(() => {
+  const dialog = document.getElementById("work-project-dialog");
+  const frame = document.getElementById("work-project-frame");
+  const closeButton = document.getElementById("work-project-close");
+  const previousButton = document.getElementById("work-project-prev");
+  const nextButton = document.getElementById("work-project-next");
+  const cards = [...document.querySelectorAll("a.project-card[href]")];
+
+  let visibleCards = [];
+  let currentIndex = 0;
+  let opener = null;
+
+  function showProject(index) {
+    const card = visibleCards[index];
+    if (!card) return;
+
+    currentIndex = index;
+    const title = card.querySelector(".project-name")?.textContent.trim() || "Project details";
+    dialog.setAttribute("aria-label", title);
+    frame.title = title;
+    previousButton.disabled = index === 0;
+    nextButton.disabled = index === visibleCards.length - 1;
+    frame.src = card.href;
+  }
+
+  for (const card of cards) {
+    card.addEventListener("click", event => {
+      if (event.defaultPrevented || event.button !== 0 ||
+          event.metaKey || event.ctrlKey || event.shiftKey || event.altKey ||
+          typeof dialog.showModal !== "function") return;
+
+      event.preventDefault();
+      visibleCards = cards.filter(item => !item.hidden && item.getClientRects().length);
+      opener = card;
+      dialog.showModal();
+      closeButton.focus({ preventScroll: true });
+      showProject(visibleCards.indexOf(card));
+    });
+  }
+
+  frame.addEventListener("load", () => {
+    if (!dialog.open || !frame.contentDocument?.querySelector(".detail-page")) return;
+
+    const project = frame.contentDocument;
+    const embeddedStyle = project.createElement("style");
+    embeddedStyle.textContent = `
+      .site-header, .site-footer, .back-link, .project-navigation,
+      .project-nav, #navigation {
+        display: none !important;
+      }
+
+      main.detail-page {
+        width: auto !important;
+        max-width: none !important;
+        padding: 0.5rem clamp(1rem, 3vw, 2rem) 2rem !important;
+      }
+
+      .detail-page .project-layout {
+        margin-top: 0 !important;
+        gap: clamp(1.25rem, 4vw, 3.5rem) !important;
+      }
+
+      .detail-page .detail-info {
+        position: static !important;
+      }
+
+      .detail-page .detail-info h1 {
+        font-size: clamp(2rem, 4.4vw, 3.6rem) !important;
+      }
+
+      @media (max-width: 720px) {
+        .detail-page .project-layout {
+          grid-template-columns: minmax(0, 1fr) !important;
+        }
+      }
+    `;
+    project.head.append(embeddedStyle);
+
+    const category = project.querySelector(".detail-info .eyebrow");
+    if (category) {
+      category.textContent = category.textContent.replace(/^\s*PROJECT\s+\d+\s*\/\s*/i, "");
+    }
+
+    project.addEventListener("keydown", event => {
+      // Let the project's own map viewer handle Escape while it is open.
+      if (event.key !== "Escape" || event.defaultPrevented ||
+          project.querySelector("dialog[open], .lightbox.active, .lightbox.show")) return;
+      event.preventDefault();
+      dialog.close();
+    }, true);
+  });
+
+  previousButton.addEventListener("click", () => showProject(currentIndex - 1));
+  nextButton.addEventListener("click", () => showProject(currentIndex + 1));
+  closeButton.addEventListener("click", () => dialog.close());
+
+  dialog.addEventListener("close", () => {
+    frame.src = "about:blank";
+    opener?.focus({ preventScroll: true });
+    opener = null;
+  });
+})();
+</script>
+<!-- END WORK PROJECT DIALOG -->
 </body>
 </html>

@@ -400,9 +400,9 @@
     <a class="logo" href="../index.html">LANYUE ZHANG</a>
     <div class="nav-links">
       <a href="../index.html">Home</a>
-      <a href="../research.html">Research</a>
+
       <a href="../about.html">About</a>
-      <a href="../contact.html">Contact</a>
+      <a href="../about.html#portfolio-contact">Contact</a>
     </div>
   </nav>
 </header>
@@ -946,13 +946,13 @@ function zoomCenter(factor) {
 
 function openViewer(src, alt) {
   resetZoom();
-  zoomImage.src = src;
   zoomImage.alt = alt;
   dialog.showModal();
 
   zoomImage.onload = () => {
-    resetZoom();
+    zoomCenter(1.25);
   };
+  zoomImage.src = src;
 }
 
 byId("zoomIn").addEventListener("click", () => zoomCenter(1.35));
