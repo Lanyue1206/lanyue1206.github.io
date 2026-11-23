@@ -155,7 +155,6 @@ if (project && root) {
         <a class="logo" href="../index.html">LANYUE ZHANG</a>
         <div class="nav-links">
           <a href="../index.html">Home</a>
-          <a class="active" href="../work.html">Work</a>
           <a href="../research.html">Research</a>
           <a href="../about.html">About</a>
           <a href="../contact.html">Contact</a>
